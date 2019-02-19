@@ -1,0 +1,25 @@
+{
+  "name": "hellots",
+  "version": "1.0.0",
+  "description": "code demo for typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tomgiggs",
+  "license": "ISC",
+  "dependencies": {
+    "@types/elasticsearch": "^5.0.31",
+    "@types/log4js": "^2.3.5",
+    "@types/mongodb": "^3.1.19",
+    "@types/mysql": "^2.15.5",
+    "@types/redis": "^2.8.10",
+    "@types/sequelize": "^4.27.36",
+    "elasticsearch": "^15.4.1",
+    "log4js": "^4.0.2",
+    "mongodb": "^3.1.13",
+    "mysql": "^2.16.0",
+    "redis": "^2.8.0",
+    "sequelize": "^4.42.0"
+  }
+}

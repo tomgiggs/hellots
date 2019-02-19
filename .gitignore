@@ -1,0 +1,7 @@
+*.pyc
+.git/*
+.history/*
+.vscode/*
+node_modules/*
+test/
+*.map
