@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",//为JS的表现来制定规范
+        "target": "es2015",//ECMAScript版本
+        "noImplicitAny": false,//在包含 any 类型的表达式和声明时引发错误
+        "strictNullChecks": false,//在包含 any 类型的表达式和声明时引发错误
+        "sourceMap": false,// .map文件生成控制
+        "declaration": false,// .d.ts文件生成控制
+        "alwaysStrict":false,//以严格模式解析
+        "typeRoots": [
+            "./node_modules/@types",
+            "./node_modules/typings",
+            "./typing"
+        ],
+        "lib": [
+            "es2015"
+        ],
+        "rootDirs": ["."],//仅用来控制输出的目录结构--outDir
+        //"outDir": ".", //重定向输出目录，ts将生产js到指定目录
+        "watch":false            //在监视模式下运行编译器。会监视输出文件，在它们改变时重新编译。
+
+    },
+    "include": [
+        "config",
+        "./*.ts"
+    ],
+    "exclude": [
+        "bin",
+        "typings",
+        "package",
+        "node_modules",
+        "**/*.spec.ts",
+        "typing/struct.d.ts"
+    ]
+}
