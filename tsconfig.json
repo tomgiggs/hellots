@@ -4,7 +4,7 @@
         "target": "es2015",//ECMAScript版本
         "noImplicitAny": false,//在包含 any 类型的表达式和声明时引发错误
         "strictNullChecks": false,//在包含 any 类型的表达式和声明时引发错误
-        "sourceMap": false,// .map文件生成控制
+        "sourceMap": true,// .map文件生成控制
         "declaration": false,// .d.ts文件生成控制
         "alwaysStrict":false,//以严格模式解析
         "typeRoots": [

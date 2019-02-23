@@ -5,3 +5,16 @@ redisClient.incrby('usercount',1,(err)=>{
     console.log('good');
 
 })
+redisClient.lpush('login_queue','user01',function(err,result){
+    if(err){
+        console.log(err);
+    }else{
+        console.log('insert to queue result is :'+result);
+    }
+
+})
+
+
+
+
+
