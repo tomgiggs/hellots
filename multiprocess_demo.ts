@@ -9,7 +9,7 @@ let workers:Array<any> = []
 let cur:number= 0;
 let cpunum:number = os.cpus().length;
 
-for (let i = 0; i < 2; ++i) {
+for (let i = 0; i < cpunum; ++i) {
   workers.push(subprocess.fork('./worker.js'));
   console.log('Create worker-' + workers[i].pid);
 }
