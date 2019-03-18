@@ -1,5 +1,6 @@
 import * as sequelize from 'sequelize';
 import { userInfo } from 'os';
+import { map } from 'bluebird';
 let client= new sequelize(  
         'test',
         'root',  
@@ -38,6 +39,8 @@ const User = client.define('user', {
         updatedAt: false
     });
     
+
+
 // force: true 如果表已经存在，将会丢弃表
 // User.sync({force: true}).then(() => {
 // // 表已创建
@@ -81,7 +84,8 @@ const User = client.define('user', {
 //     console.log(err)
 // });
 //插入记录，更网上代码不一样，这个并不是更新数据,给跪了，半天不知道怎么更新。。。。
-User.update({fullname:'gooooooooooooood' }, { where: { uid: '22222222222' } });
+// User.update({fullname:'gooooooooooooood' }, { where: { uid: '22222222222' } });
+// User.destroy({ where: { uid: '22222222222' } });
 // client.transaction( t => {
 //     return User.upsert({
 //         uid: '22222222222',
@@ -92,3 +96,49 @@ User.update({fullname:'gooooooooooooood' }, { where: { uid: '22222222222' } });
 //         console.log(`修改数据${err}`)
 //     })
 // })
+
+
+let UserLimit = client.define('user_limit', {
+    uid: {
+        type: sequelize.STRING,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+        field: 'uid'
+    },
+    works_limits: {
+        type: sequelize.INTEGER(20).UNSIGNED,
+        allowNull: true,
+        defaultValue: '100',
+        field: 'works_limits'
+    },
+    release_wait_time: {
+        type: sequelize.INTEGER(20),
+        allowNull: true,
+        defaultValue: '120',
+        field: 'release_wait_time'
+    }
+},{
+    timestamps: false,
+    createdAt: false, //取消添加列
+    updatedAt: false
+});
+
+
+function getUserLimitById(user_id:string){
+    let options = {
+        where:{
+              uid:user_id
+        },
+        attributes: ['release_wait_time', 'works_limits'], //指定要返回哪些列
+        // order: [['title', 'DESC']]
+    };
+    UserLimit.findOne(options).then((result:any)=>{
+        // console.log(result.dataValues);//这样写在js中是可以正常运行的。。。。，在ts中报result没有属性dataValues,鬼知道你返回的是什么类型啊，含有什么类型啊，我究竟要怎么取到值呢？？？
+        console.log(result.dataValues);
+        // console.log(result)
+
+    });
+}
+
+getUserLimitById('cyl222222')
