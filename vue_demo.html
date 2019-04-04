@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  </head>
+
+  <body>
+      <!-- bootstrap官网：https://v3.bootcss.com/getting-started/ -->
+      <!-- Vue官网：https://cn.vuejs.org/v2/guide/events.html -->
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <!-- bootstrap主要提供了一系列现成可用的css代码，直接引用就可以显示出好看的效果 -->
+    <div id="root">
+            <div class="container">
+                <div class="masthead" style="background:rgb(96, 81, 233); color:rgb(204, 18, 18)">
+                    <nav>
+                    <ul class="nav nav-justified">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Downloads</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    </nav>
+                </div>
+            </div>
+            <mfooter></mfooter>
+          </div>
+
+    <div><p>这是一个vue+bootstrap+jquery的样例页面</p></div>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <div><p>-----------------------获取数据并渲染------------------------</p></div>
+    <div class="padding">
+      <div id="app">
+        <ol>
+            <!-- comment -->
+            <!-- 循环获取数据，v-for是Vue的自定义指令，循环的名称是写死的，不能随便改，因为需要配合Vue中定义的data里面的字段，
+            不匹配的话会找不到数据，也就是v-for 中的site in sites 的sites是在Vue实例中定义的，
+            而site是在返回的数据中字段，如果返回的数据中没有name这个字段，那同样会找不到数据，而且返回的数据必须是一个列表 -->
+          <li v-for="site in sites">
+            {{ site.name }} 
+            <!-- 数据通过{{}}这样包围起来，Vue会自动拿取数据来渲染 -->
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div><p>-----------------------获取事件并处理-----------------------</p></div>
+    <div v-on:click.prevent id="btngroup" style="margin-left: 20px;margin-top: 20px" class="btn-group">
+            <div v-on:click=makeActive("按钮1") class="btn btn-primary">按钮1</div>
+            <div v-on:click=makeActive("按钮2") class="btn btn-success">按钮2</div>
+            <div v-on:click=makeActive("按钮3") class="btn btn-info">按钮3</div>
+            <br>
+            <p>当前选择的是:{{select}}</p>
+        </div>
+        <div><p>-----------------------处理表单-----------------------</p></div>
+<div>
+        <input v-model="message" placeholder="edit me">
+        <p>Message is: {{ message }}</p>
+</div>
+<div><p>-----------------------多选框-----------------------</p></div>
+<div id="example-3">
+        <select v-model="selected" multiple style="width: 50px;">
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <br>
+        <span>Selected: {{ selected }}</span>
+      </div>
+    <script>
+      function getJson(url, func) {
+        $.ajax({
+          type: "get",
+          url: url,
+          dataType: "json",
+          success: function(data) {
+              console.log(data);
+            if (data.code == 0) {
+              var a = data.data;
+              func(a);
+            } else {
+              alert("接口调用失败");
+            }
+          },
+          error: function(data) {
+            alert(JSON.stringify(data));
+          }
+        });
+      }
+            function pushDom(data) {
+                //好像没法再Vue创建的时候一次传入两个绑定事件，那要怎么做呢，不然每次一个绑定事件都要新建一个Vue对象吗？页面代码多了之后变量怎么管理呢？
+            //     var vm = new Vue([{
+            //         el: "#app",
+            //         data: {
+            //             sites: data
+            //         }
+            //     }, {
+            //         el: '#btngroup',
+            //         data: {
+            //             select: '按钮1'
+            //         },
+            //         methods: {
+            //             makeActive: function (item) {
+            //                 this.select = item;
+            //             }
+            //         }
+            //     }]);
+            // }
+            var vm = new Vue({
+                    el: "#app",
+                    data: {
+                        sites: data
+                    }
+                });
+            }
+            var vm2 = new Vue( {
+                    el: '#btngroup',
+                    data: {
+                        select: '按钮1'
+                    },
+                    methods: {
+                        makeActive: function (item) {
+                            this.select = item;
+                        }
+                    }
+                });
+                var vm3 =new Vue({
+                    el: '#example-3',
+                    data: {
+                        selected: []
+                    }
+                    });
+
+      $(function() {
+        var url = "http://127.0.0.1:5555";
+        getJson(url, pushDom);
+      });
+    </script>
+  </body>
+</html>
