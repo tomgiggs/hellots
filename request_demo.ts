@@ -53,7 +53,16 @@ function copy_product() {
 function download(url:string) {
     let md5 = crypto.createHash('md5');
     let filename = md5.update(url).digest('hex');
-    request.get(url)
+    request.defaults({
+        proxy:"192.168.211.3:2000"
+        // host:"192.168.211.3", //这个是代理设置方式吗？怎么设置代理ip呢
+        // localAddress:"192.168.211.3" //绑定ip,好像错误的地址也不会报错。。。
+    });
+    request.get(url,{
+        proxy:"192.168.211.3:2000"
+        // host:"192.168.211.3", //这个是代理设置方式吗？怎么设置代理ip呢
+        // localAddress:"192.168.211.3" //绑定ip,好像错误的地址也不会报错。。。
+    })
         .on('error', function(err) {
             console.error(err)
         })

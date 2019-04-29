@@ -116,7 +116,12 @@ app.get('/get_resources',bodyParser.json(), function (req, res) { //express.jsæœ
         let url = req.query.url
         let md5 = crypto.createHash('md5');
         let digest = md5.update(req.query.url).digest('hex');
+        let suffixs = new Set(['.jpg','.png','.jpeg','.flv','.html','mp4'])
         let suffix = url.substring((url.lastIndexOf('.')));
+        if(!suffixs.has(suffix)){
+            suffix = ''
+        }
+
         let filename = __dirname + '/cache/' + digest + suffix;
         if (fs.existsSync(filename)) {
             res.header('Content-Type', 'image/jpeg');
