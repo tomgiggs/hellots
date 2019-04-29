@@ -61,7 +61,14 @@
             不匹配的话会找不到数据，也就是v-for 中的site in sites 的sites是在Vue实例中定义的，
             而site是在返回的数据中字段，如果返回的数据中没有name这个字段，那同样会找不到数据，而且返回的数据必须是一个列表 -->
           <li v-for="site in sites">
-            {{ site.name }} 
+              <div>
+                                
+                {{ site.name }} 
+            
+            
+            
+            </div>
+
             <!-- 数据通过{{}}这样包围起来，Vue会自动拿取数据来渲染 -->
           </li>
         </ol>
@@ -155,7 +162,7 @@
                     });
 
       $(function() {
-        var url = "http://127.0.0.1:5555";
+        var url = "http://127.0.0.1:9999/testdata";
         getJson(url, pushDom);
       });
     </script>
