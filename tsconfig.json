@@ -22,7 +22,7 @@
     },
     "include": [
         "config",
-        "./*.ts"
+        "./**/*.ts"
     ],
     "exclude": [
         "bin",

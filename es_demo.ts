@@ -9,7 +9,7 @@ import * as elasticsearch from 'elasticsearch'
 let client = new elasticsearch.Client({
     // host: "http://localhost:9200",
     // host: ["192.168.254.130:9200","192.168.254.132:9200","192.168.254.134:9200"],
-    host:['192.168.19.55'],
+    host:['192.168.19.54'],
     log: 'debug',
     sniffOnStart:true,
     keepAlive:true,
@@ -47,6 +47,17 @@ client.update({
     console.log(result);
 
 })
+// client.delete({
+//     timeout:"30s",
+//     refresh:true,
+//     id:"222",
+//     index:"index_name",
+//     type:"index_type",
+// },(err,result)=>{
+//
+// })
+
+
 // }
 // client.close();
 

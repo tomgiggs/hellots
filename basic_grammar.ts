@@ -81,7 +81,38 @@ console.log(msg);
 return 'goooooooooooood';
 });
 
+let a = "goo.oooo.ooood.jpg"
+
+console.log(a.substring((a.lastIndexOf('.'))))
+
+import * as os from 'os';
+console.log(os.cpus().length);
+console.log(os.freemem().toString());
+console.log(os.platform().toString());
+
+import * as net from 'net';
+
+net.createConnection({
+    port: 9999,
+    host: '127.0.0.1'
+}).on('data', (data) => {
+    console.log(data.toString())
+});
+
+import * as crypto from 'crypto'
+let md5 = crypto.createHash('md5');
+
+var result = md5.update('http://cdn.lizhi.fm/radio_cover/2014/02/15/9524232787310084.jpg').digest('hex');
+console.log(result)
 
 
-
-
+var ifaces=os.networkInterfaces();
+for (var dev in ifaces) {
+    var alias = 0;
+    ifaces[dev].forEach(function (details) {
+        if (details.family == 'IPv4') {
+            console.log(dev + (alias ? ':' + alias : ''), details.address);
+            ++alias;
+        }
+    });
+}
