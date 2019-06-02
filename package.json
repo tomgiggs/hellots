@@ -31,6 +31,7 @@
     "crypto": "^1.0.1",
     "elasticsearch": "^15.4.1",
     "express": "^4.16.4",
+    "express-graphql": "^0.8.0",
     "joi": "^14.3.1",
     "jquery": "^3.3.1",
     "kafka-node": "^4.0.4",
@@ -45,6 +46,7 @@
     "mysql2": "^1.6.5",
     "node-schedule": "^1.3.2",
     "node-tesseract": "^0.2.7",
+    "npm": "^6.9.0",
     "package": "^1.0.1",
     "protobufjs": "^6.8.8",
     "redis": "^2.8.0",
@@ -52,6 +54,8 @@
     "sequelize": "^4.42.0",
     "sequelize-auto": "^0.4.29",
     "sequelize-redis-cache": "^2.0.1",
+    "text": "github:requirejs/text",
+    "three.js": "^0.77.1",
     "thunkify": "^2.1.2",
     "vue": "^2.6.10",
     "xmldom": "^0.1.27",
@@ -59,6 +63,6 @@
   },
   "devDependencies": {
     "tslint": "^5.16.0",
-    "webpack": "^4.29.6"
+    "webpack": "^4.32.1"
   }
 }
