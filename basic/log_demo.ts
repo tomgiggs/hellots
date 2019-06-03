@@ -51,3 +51,75 @@ log4js.configure({
 let logger: log4js.Logger = log4js.getLogger("ddddd"); //这个会出现在log日志中的时间戳后面，表示是哪个logger输出的
 
 logger.info("this is a log demo output");
+
+//-------------------------
+
+import * as loger from "log4js"
+loger.configure({
+  appenders: { //日志事件序列化为某种形式的输出
+    default: {
+      type: "dateFile",
+      layout: {
+        type: "pattern",
+        pattern: "%[[%d{ISO8601_WITH_TZ_OFFSET}] [%h] [%c] [%p] %] %m%n",
+      },
+      filename: "default.log",
+      pattern: ".yyyy-MM-dd"
+    },
+    xxx: {
+      type: "dateFile",
+      filename: "xxx.log",
+      pattern: ".yyyy-MM-dd"
+    },
+    yyy: {
+      type: "dateFile",
+      filename: "yyy.log",
+      pattern: ".yyyy-MM-dd"
+    }
+
+  },
+  categories: { //用于分组日志事件的标签
+    default: {
+      appenders: ["default"],
+      level: "debug" //日志等级
+    },
+    xxx: {
+      appenders: ["xxx"],
+      level: "debug"
+    },
+    yyy: {
+      appenders: ["yyy"],
+      level: "debug"
+    }
+  }
+});
+
+export class XLoader{
+  options:any = null;
+  logger: loger.Logger = null//这个会出现在log日志中的时间戳后面，表示是哪个logger输出的
+
+  public constructor(consumerOptions?:any) {
+    this.options = consumerOptions;
+    this.logger = loger.getLogger(consumerOptions.logName); //getLogger获取的是category，不是appender
+  }
+  public log(msg:any){
+    this.logger.error(msg);
+    console.log('write log finsh')
+  }
+
+
+}
+let demo = new XLoader({
+  logName:"xxx"
+})
+demo.log("hhhhhhhh");
+
+
+
+
+
+
+
+
+
+

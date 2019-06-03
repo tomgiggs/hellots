@@ -8,5 +8,8 @@ test/
 *.map
 *.js
 *.log
+apitest/*
+tmp/*
+
 
 

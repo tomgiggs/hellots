@@ -48,6 +48,7 @@
     "node-tesseract": "^0.2.7",
     "npm": "^6.9.0",
     "package": "^1.0.1",
+    "pinyinlite": "^1.2.1",
     "protobufjs": "^6.8.8",
     "redis": "^2.8.0",
     "request": "^2.88.0",

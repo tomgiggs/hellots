@@ -5,7 +5,7 @@ import { map } from 'bluebird';
 //sequelize-auto -h 数据库的IP地址 -d 数据库名 -u 用户名 -x 密码 -p 端口 -t 表名
 import * as SequelizeAuto from 'sequelize-auto';//自动生成模型的工具
 let dbconfig:any = {
-    database:'test',
+    database:'vr_mmo',
     user:'root',
     password:'123',
     host:'127.0.0.1',
