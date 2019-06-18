@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+
+<div><p>这是一个vue+bootstrap+jquery的样例页面</p></div>
+<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+
+<div><p>-----------------------获取事件并处理-----------------------</p></div>
+<div v-on:click.prevent id="btngroup" style="margin-left: 20px;margin-top: 20px" class="btn-group">
+    <div v-on:click=count() class="btn btn-primary">按钮1</div>
+    <div v-on:click=showGlobal() class="btn btn-success">按钮2</div>
+    <div v-on:click=makeActive("按钮3") class="btn btn-info">按钮3</div>
+    <br>
+    <div><p>-----------------------多选框-----------------------</p></div>
+    <select v-model="selected" multiple style="width: 50px;">
+
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+
+  <div>
+        <input v-model="message" placeholder="edit me">
+    </div>
+
+</div>
+
+
+<script>
+    function getJson(url, func) {
+        $.ajax({
+            type: "get",
+            url: url,
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if (data.code == 0) {
+                    var a = data.data;
+                    func(a);
+                } else {
+                    alert("接口调用失败");
+                }
+            },
+            error: function(data) {
+                alert(JSON.stringify(data));
+            }
+        });
+    }
+    function pushDom(data) {
+        //好像没法再Vue创建的时候一次传入两个绑定事件，那要怎么做呢，不然每次一个绑定事件都要新建一个Vue对象吗？页面代码多了之后变量怎么管理呢？
+        //     var vm = new Vue([{
+        //         el: "#app",
+        //         data: {
+        //             sites: data
+        //         }
+        //     }, {
+        //         el: '#btngroup',
+        //         data: {
+        //             select: '按钮1'
+        //         },
+        //         methods: {
+        //             makeActive: function (item) {
+        //                 this.select = item;
+        //             }
+        //         }
+        //     }]);
+        // }
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                sites: data
+            }
+        });
+    }
+    var vm2 = new Vue( {
+        el: '#btngroup',
+        data:{
+            selected: [],
+            message:""
+        },
+        mounted () {
+            this.init();
+        },
+
+        methods: {
+            init:function(){
+                this.clickCount=0;
+            },
+            makeActive: function (item) {
+                this.select = item;
+                alert("method2")
+            },
+            count:function () {
+                this.clickCount+=1;
+            },
+            showGlobal:function () {
+                alert(this.clickCount);
+                console.log(this.message);
+                console.log(this.selected)
+            }
+        },
+
+        watch:{
+            selected:function(){
+                console.log(this.selected)
+            },
+            message:function(){
+                console.log(this.message)
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
