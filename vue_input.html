@@ -24,6 +24,7 @@
     <div v-on:click=count() class="btn btn-primary">按钮1</div>
     <div v-on:click=showGlobal() class="btn btn-success">按钮2</div>
     <div v-on:click=makeActive("按钮3") class="btn btn-info">按钮3</div>
+    <!--这里不同的按钮绑定了不同的函数，而且可以传参，主要是vue自定义的指令，编码过程中保证变量名一致就可以-->
     <br>
     <div><p>-----------------------多选框-----------------------</p></div>
     <select v-model="selected" multiple style="width: 50px;">
@@ -60,39 +61,14 @@
             }
         });
     }
-    function pushDom(data) {
-        //好像没法再Vue创建的时候一次传入两个绑定事件，那要怎么做呢，不然每次一个绑定事件都要新建一个Vue对象吗？页面代码多了之后变量怎么管理呢？
-        //     var vm = new Vue([{
-        //         el: "#app",
-        //         data: {
-        //             sites: data
-        //         }
-        //     }, {
-        //         el: '#btngroup',
-        //         data: {
-        //             select: '按钮1'
-        //         },
-        //         methods: {
-        //             makeActive: function (item) {
-        //                 this.select = item;
-        //             }
-        //         }
-        //     }]);
-        // }
-        var vm = new Vue({
-            el: "#app",
-            data: {
-                sites: data
-            }
-        });
-    }
-    var vm2 = new Vue( {
+
+    var vm2 = new Vue( {//Vue会将参数实例化绑定到vue对象上
         el: '#btngroup',
         data:{
             selected: [],
-            message:""
+            message:""//这里声明的变量会被绑定到vm2这个对象上面，页面会获取对应的变量去渲染，渲染是通过下面的watcher来实现的
         },
-        mounted () {
+        mounted () {//这里执行初始化操作，可以初始化全局变量用于收集用户输入用于提交
             this.init();
         },
 
