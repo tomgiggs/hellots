@@ -48,7 +48,11 @@ app.all('*', function (req, res, next) {
 
 // app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/', function (req, res) {
-    res.sendFile( __dirname + "/" + "upload.html" );
+    // console.log(req.header);
+    // console.log(req.headers);
+    // console.log(req.getHeader());
+    // res.sendFile( __dirname + "/" + "upload.html" );
+    res.send("hello world,this is express")
  })
 
 app.get('/count', function (req, res) {
@@ -83,6 +87,8 @@ app.post('/upload', upload.any(), function(req, res, next) {
     //     });
     // });
 });
+
+
 app.post('/get_resources',bodyParser.json(), function (req, res) { //express.js有点不一样的就是很多事情都是要在post这个请求里面加函数
     var headers = req.headers;
     console.log(req.query); //这个是用bodyparser.urlencoded获取的
@@ -156,7 +162,37 @@ app.get('/get_resources',bodyParser.json(), function (req, res) { //express.js�
     // });
 });
 
+app.get('/page_proxies',bodyParser.json(), function (req, res) { //express.js有点不一样的就是很多事情都是要在post这个请求里面加函数
+    try {
+        console.log(req.query); //这个是用bodyparser.urlencoded获取的
+        // console.log(req.params);
+        // console.log(req.body);//只有这个可以获取到post过来的数据
+        // console.log(req);
+        let url = req.query.url
+        let md5 = crypto.createHash('md5');
+        let digest = md5.update(req.query.url).digest('hex');
+        let suffixs = new Set(['.jpg','.png','.jpeg','.flv','.html','mp4'])
+        let suffix = url.substring((url.lastIndexOf('.')));
+        if(!suffixs.has(suffix)){
+            suffix = ''
+        }
 
+        let filename = __dirname + '/cache/' + digest + suffix;
+        if (fs.existsSync(filename)) {
+            res.header('Content-Type', 'image/jpeg');
+            res.sendFile(filename);
+            return;
+        } else {
+            let result = request(url);
+            result.pipe(fs.createWriteStream(filename));
+            result.pipe(res);
+            result.end();
+        }
+    }catch (e) {
+        console.log(e);
+        res.send({"success":false})
+    }
+});
 
 app.get('/testdata',function (req,res,next){
     res.send(JSON.stringify({"name":"python_demo","code":0,"data":[{'name': 'id'}, {'name': 'guid'}, {'name': 'productname'}, {'name': 'ownerid'}, {'name': 'ownername'}, {'name': 'resid'}, {'name': 'online'}, {'name': 'score'}, {'name': 'scorenumber'}, {'name': 'version'}, {'name': 'versioncode'}, {'name': 'screenshot'}, {'name': 'icon'}, {'name': 'releasetime'}, {'name': 'updatetime'}, {'name': 'createtime'}, {'name': 'category'}, {'name': 'flag'}, {'name': 'limit'}, {'name': 'privacy'}, {'name': 'price'}, {'name': 'baseid'}, {'name': 'statement'}, {'name': 'area'}, {'name': 'is_exp_protocol'}, {'name': 'base_version'}, {'name': 'grade'}, {'name': 'search_heat'}, {'name': 'pc'}, {'name': 'web'}, {'name': 'android'}, {'name': 'ios'}, {'name': 'wp'}, {'name': 'pc_edit'}, {'name': 'web_edit'}, {'name': 'android_edit'}, {'name': 'ios_edit'}, {'name': 'wp_edit'}, {'name': 'need_server'}, {'name': 'need_deploy'}, {'name': 'played_num'}]

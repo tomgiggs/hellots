@@ -42,6 +42,7 @@ import * as kafka from "kafka-node"
 // });
 
 import * as loger from "log4js"
+import {RetryOptions} from "kafka-node";
 
 loger.configure({
     appenders: {
@@ -140,35 +141,47 @@ class Test{
 class CustomedConsumer extends  kafka.KafkaClient {
 }
 
+
+
 try{
-    let consumer = new kafka.ConsumerGroup({
-        kafkaHost:'192.168.9.129:9092,192.168.9.129:9092',
-        groupId:"canal_consumer052",
-        fromOffset:"earliest",
-        autoCommit:false,
-        outOfRangeOffset:"earliest",
-        maxNumSegments:100,
+    let kafkaClient = new kafka.KafkaClient({
+        kafkaHost: "192.168.19.54:9092",
+        connectTimeout: 180000,
+        requestTimeout: 180000,
+        autoConnect: true,
+    });
+
+    let offsetReq = [{
+        topic: "canal_msg_perfomance01",
+        partition: 1,
+        // offset: 0
+    }];
+
+    let simpleConsumer = new kafka.Consumer(kafkaClient,offsetReq,{
+        // groupId: "canal_consumer052",
+        // autoCommit: false,
         fetchMaxBytes:100000,
-        sessionTimeout:180000,
         fetchMaxWaitMs:100000,
-        retryMinTimeout:120000,
-        // requestTimeout: 300000,//超时时间设置得这么长了还是报超时错误，这个肯定是有问题的，这个参数是kafkaClient的参数，但是在GroupConsumer的index.d.ts参数里面没有
-
-    },"canal_msg_development");
-
-
-
+    });
     console.log('good');
-    console.log(consumer.memberId);
 
     // consumer.client.on("ready",()=>{console.log('ready')})
-    consumer.on("error",err=>{
+    simpleConsumer.on("error",err=>{
         console.log(err);
-    })
-    consumer.on("message",msg=>{
+    });
+
+    simpleConsumer.on("message",msg=>{
+        console.log(msg);
+    });
+    // simpleConsumer.client.on("ready",msg=>{
+    //     console.log(msg);
+    // });
+    // simpleConsumer.client.on("connect",msg=>{
+    //     console.log(msg);
+    // })
+    simpleConsumer.on("message",msg=>{
         console.log(msg);
     })
-
     // setInterval(()=>{if(consumer.client){
     //     console.log("ready")
     // }},1000)
@@ -178,6 +191,48 @@ try{
 }catch (e) {
     console.log(e)
 }
+
+
+// try{
+//     let consumer = new kafka.ConsumerGroup({
+//         // kafkaHost:'192.168.9.129:9092,192.168.9.129:9092',
+//         kafkaHost:'192.168.19.54:9092',
+//
+//         groupId:"canal_consumer052",
+//         fromOffset:"earliest",
+//         autoCommit:false,
+//         outOfRangeOffset:"earliest",
+//         maxNumSegments:100,
+//         fetchMaxBytes:100000,
+//         sessionTimeout:180000,
+//         fetchMaxWaitMs:100000,
+//         retryMinTimeout:120000,
+//         // requestTimeout: 300000,//超时时间设置得这么长了还是报超时错误，这个肯定是有问题的，这个参数是kafkaClient的参数，但是在GroupConsumer的index.d.ts参数里面没有
+//
+//     },"canal_msg_perfomance01");
+//
+//
+//     console.log('good');
+//     console.log(consumer.memberId);
+//
+//     // consumer.client.on("ready",()=>{console.log('ready')})
+//     consumer.on("error",err=>{
+//         console.log(err);
+//     })
+//
+//     consumer.on("message",msg=>{
+//         console.log(msg);
+//     })
+//
+//     // setInterval(()=>{if(consumer.client){
+//     //     console.log("ready")
+//     // }},1000)
+//
+//
+//
+// }catch (e) {
+//     console.log(e)
+// }
 
 
 //

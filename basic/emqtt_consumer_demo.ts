@@ -1,6 +1,6 @@
 import * as mqtt from "mqtt";
 
-let client = mqtt.connect("http://192.168.254.128:1881",{
+let client = mqtt.connect("http://192.168.212.34:1883",{
     username:'admin',
     password:'public'
 })
