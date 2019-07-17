@@ -48,7 +48,11 @@ app.all('*', function (req, res, next) {
 
 // app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/', function (req, res) {
-    res.sendFile( __dirname + "/" + "upload.html" );
+    // console.log(req.header);
+    // console.log(req.headers);
+    // console.log(req.getHeader());
+    // res.sendFile( __dirname + "/" + "upload.html" );
+    res.send("hello world,this is express")
  })
 
 app.get('/count', function (req, res) {
@@ -83,6 +87,8 @@ app.post('/upload', upload.any(), function(req, res, next) {
     //     });
     // });
 });
+
+
 app.post('/get_resources',bodyParser.json(), function (req, res) { //express.js有点不一样的就是很多事情都是要在post这个请求里面加函数
     var headers = req.headers;
     console.log(req.query); //这个是用bodyparser.urlencoded获取的

@@ -153,7 +153,7 @@ try{
 
     let offsetReq = [{
         topic: "canal_msg_perfomance01",
-        // partition: 1,
+        partition: 1,
         // offset: 0
     }];
 
@@ -168,11 +168,11 @@ try{
     // consumer.client.on("ready",()=>{console.log('ready')})
     simpleConsumer.on("error",err=>{
         console.log(err);
-    })
+    });
 
     simpleConsumer.on("message",msg=>{
         console.log(msg);
-    })
+    });
     // simpleConsumer.client.on("ready",msg=>{
     //     console.log(msg);
     // });

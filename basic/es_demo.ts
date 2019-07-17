@@ -6,25 +6,50 @@
 // import * as fs from 'fs';
 // import * as sequelize from 'sequelize';
 import * as elasticsearch from 'elasticsearch'
-let client = new elasticsearch.Client({
-    // host: "http://localhost:9200",
-    // host: ["192.168.254.130:9200","192.168.254.132:9200","192.168.254.134:9200"],
-    host:['eshost.com:9200'],
-    log: 'debug',
-    sniffOnStart:true,
-    keepAlive:true,
-    requestTimeout:180000,
+// let client = new elasticsearch.Client({
+//     // host: "http://localhost:9200",
+//     // host: ["192.168.254.130:9200","192.168.254.132:9200","192.168.254.134:9200"],
+//     host:['192.168.9.129:9200'],
+//     log: 'debug',
+//     sniffOnStart:true,
+//     keepAlive:true,
+//     requestTimeout:180000,
+// });
+// client.close();
+//
+// client.ping({
+//     requestTimeout:30000
+//
+// },(err,result,status)=>{
+//     console.log(err);
+//     console.log(result);
+//     console.log(status);
+// });
+
+//-----------------------------------
+
+let esMonitor = new elasticsearch.Client({
+    host: "192.168.9.129:9200",
+    requestTimeout:10000,
+    // maxRetries:100,
+    sniffOnStart: true,
+    keepAlive: true,
+    log:"debug",
 });
-
-
-client.ping({
-    requestTimeout:30000
-
-},(err,result,status)=>{
-    console.log(err);
-    console.log(result);
-    console.log(status);
-})
+setInterval(()=>{
+    esMonitor.ping({
+        requestTimeout:10000
+    },(err,result,status)=>{
+        console.log(err,result,status);
+        // if (err ) {
+        //     console.log(err,result,status);
+        // }
+        // if(!err && status==200){
+        //     console.log(err,result,status);
+        // }
+    })
+},1000);
+//----------------------------
 
 // for (let i = 0; i < 5000; i++) {
 
@@ -41,55 +66,6 @@ client.ping({
 //         "productname": "zjl-es-test111",
 //         "ownerid": 10000082,
 //         "ownername": "庄杰良",
-//         "online": 0,
-//         "score": 0,
-//         "scorenumber": 0,
-//         "version": "1.00",
-//         "versioncode": 0,
-//         "screenshot": "27eb58eb-9da1-43fe-ad73-159ab9bf2457",
-//         "icon": "e09e5dff-8390-4c3a-b393-4d49dfeac805",
-//         "releasetime": "20190524105814",
-//         "updatetime": 20190524105814,
-//         "createtime": 20190524105814,
-//         "category": 0,
-//         "flag": 0,
-//         "limit": 10,
-//         "privacy": 1,
-//         "price": 0,
-//         "baseid": "",
-//         "statement": "",
-//         "area": "cn",
-//         "is_exp_protocol": "0",
-//         "base_version": "",
-//         "pc": 0,
-//         "web": 1,
-//         "android": 0,
-//         "ios": 0,
-//         "wp": 0,
-//         "pc_edit": 0,
-//         "web_edit": 0,
-//         "android_edit": 0,
-//         "ios_edit": 0,
-//         "wp_edit": 0,
-//         "need_server": 0,
-//         "need_deploy": 1,
-//         "productid": "c5eb8680-7dcf-11e9-bd90-653d234bf625",
-//         "introduction": "111",
-//         "game_tags": [],
-//         "edu_tags": [],
-//         "other_game_tags": [],
-//         "other_edu_tags": [],
-//         "customed_tags": "",
-//         "customed_game_tags": "",
-//         "customed_edu_tags": "",
-//         "tag_codes": [],
-//         "used_num": 0,
-//         "likes": 0,
-//         "id": "c5eb8680-7dcf-11e9-bd90-653d234bf625",
-//         "resid": "",
-//         "doc_url": "",
-//         "doc_open": "0",
-//         "web_pc_edit": 1
 //     }
 //
 // },(err,result)=>{
@@ -198,37 +174,37 @@ client.ping({
 // processor.d_product_set({
 //     "keyword":"hahahahahahahaha"
 // })
-
-client.search({
-    index: 'vr_mmo_product_base_info_qa_20190524',
-    type:'info',
-    body:{
-        "query": {
-            "bool": {
-                "must": [
-                    {
-                        "prefix": {
-                            "productname": "切"
-                        }
-                    }
-                ],
-                "must_not": [],
-                "should": []
-            }
-        },
-        "from": 0,
-        "size": 10,
-        "sort": [],
-        "aggs": {}
-
-    }
-}, function (error, response) {
-    if(error){
-        console.log(error)
-    }
-    console.log(response)
-    response.hits.hits.map((v)=>console.log(v))
-});
+//
+// client.search({
+//     index: 'vr_mmo_product_base_info_qa_20190524',
+//     type:'info',
+//     body:{
+//         "query": {
+//             "bool": {
+//                 "must": [
+//                     {
+//                         "prefix": {
+//                             "productname": "切"
+//                         }
+//                     }
+//                 ],
+//                 "must_not": [],
+//                 "should": []
+//             }
+//         },
+//         "from": 0,
+//         "size": 10,
+//         "sort": [],
+//         "aggs": {}
+//
+//     }
+// }, function (error, response) {
+//     if(error){
+//         console.log(error)
+//     }
+//     console.log(response)
+//     response.hits.hits.map((v)=>console.log(v))
+// });
 
 
 
