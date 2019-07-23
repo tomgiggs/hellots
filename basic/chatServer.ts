@@ -21,8 +21,8 @@ mysqlClient.connect((err)=>{
     }
 });
 let client = mqtt.connect("http://192.168.249.128:1883",{
-    username:'edbox_client_inland',
-    password:'kkclient2018.inland'
+    username:'goood',
+    password:'hahah'
 })
 
 let port = 9999;
