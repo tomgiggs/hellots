@@ -15,6 +15,7 @@ listener.prototype.serve = function(){
     let server = net.createServer();
     server.on('connection',(socket)=>{
         socket.on('data',(data)=>{
+            this.emit("getdata");
             console.log(data.toString());
         });
 

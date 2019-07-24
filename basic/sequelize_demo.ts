@@ -176,3 +176,50 @@ function getUserLimitById(user_id:string){
 }
 
 getUserLimitById('cyl222222');
+
+import dProductDeploy from '../models/dProductDeploy'
+import dProductBase from '../models/dProductBase'
+let dbase = client.define("d_product_base",dProductBase);
+let ddeploy = client.define("d_product_deploy",dProductDeploy);
+
+//报错 d_product_base is not associated to d_product_deploy! 网上说要关联查询需要在模型定义里面写明关系“多表首先是定义model时就声明多表之间的关系”，fuck!!!!!!!
+let result = ddeploy.findOne();
+
+// {
+//     raw:true,
+//         include: [{
+//     model: dbase,
+//     where: { flag: 4 }
+// }]
+// }
+
+console.log(result.then((data) => {
+
+    // for(let row of data){
+    //     console.log(row);
+    //     break;
+    //     // console.log(row.app_id+'_'+row.app_version+'_'+row.access_type+'_'+row.code_type+'_'+row.versioncode)
+    // }
+    console.log(data);
+}));
+
+function excute_sql(){
+    let sql1 = "SELECT a.app_id,a.app_version FROM (SELECT app_id,app_version FROM d_product_deploy WHERE STATUS !=0 AND access_type=3) a " +
+        "LEFT JOIN (SELECT guid,`version`,flag FROM d_product_set WHERE flag =4)b ON a.app_id=b.guid AND a.app_version=b.version WHERE b.version IS NULL";
+
+    let result = client.query(sql1, {
+        // raw: true,
+        type:sequelize.QueryTypes.SELECT
+
+    });
+
+    console.log(result.all().then((data) => {
+        for(let row of data){
+            console.log(row);
+            // break;
+            console.log(row.app_id+'_'+row.app_version+'_'+row.access_type+'_'+row.code_type+'_'+row.versioncode)
+        }
+        // console.log(data);
+    }));
+}
+

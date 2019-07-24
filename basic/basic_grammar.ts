@@ -46,7 +46,7 @@ function unknow_arg(name:string,...args){
     args.forEach(arg=>{
         console.log(arg)
     })
-};
+}
 // unknow_arg('tom',11,22,33,44,55,66)
 
 
@@ -116,3 +116,31 @@ for (var dev in ifaces) {
         }
     });
 }
+
+
+let aa = ['20','30'];
+if(Object.keys(aa).length==0){
+    console.log("a is empty")
+}
+
+
+// setTimeout(function () {
+//     console.log("i sleep 20 s")
+// },20000)
+
+//循环定时执行
+// let count = 0;
+// let i =null;
+// i = setInterval(function () {
+//     console.log("sleep 3 s");
+//     // console.log(i);
+//     count++;
+//     if(count==5){
+//         console.log("exiting");
+//         clearInterval(i);
+//     }
+// },3000);
+
+// let i = Math.floor(420/100)
+// console.log(i)
+
