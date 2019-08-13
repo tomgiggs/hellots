@@ -164,6 +164,7 @@ function getUserLimitById(user_id:string){
         where:{
               uid:user_id
         },
+        field:[''],
         attributes: ['release_wait_time', 'works_limits'], //指定要返回哪些列
         // order: [['title', 'DESC']]
     };

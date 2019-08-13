@@ -36,6 +36,7 @@ let esMonitor = new elasticsearch.Client({
     keepAlive: true,
     log:"debug",
 });
+// esMonitor.close()
 setInterval(()=>{
     esMonitor.ping({
         requestTimeout:10000
@@ -50,6 +51,8 @@ setInterval(()=>{
     })
 },1000);
 //----------------------------
+
+
 
 // for (let i = 0; i < 5000; i++) {
 
