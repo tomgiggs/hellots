@@ -45,6 +45,7 @@ class ProtoParser {
         });
     }
 
+    
     public parseProtoSync(filename){
         let fileNameList = filename.toLowerCase().split("\\");
         let fullPackageNmae = fileNameList[fileNameList.length-1].split('.')[0];
