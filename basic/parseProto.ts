@@ -125,9 +125,9 @@ class ProtoParser {
     }
 }
 
-let demo = new ProtoParser("D:\\workspace\\Edbox_Server\\game-server\\proto");
-// demo.parseAll();
-demo.parseAllSync()
+// let demo = new ProtoParser("D:\\workspace\\Edbox_Server\\game-server\\proto");
+// // demo.parseAll();
+// demo.parseAllSync()
 
 
 

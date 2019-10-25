@@ -7,6 +7,11 @@ node_modules/*
 test/
 *.js.map
 *.js
+*.mp4
+*.mp3
+*.wma
+*.avi
+*.ogg
 *.log
 apitest/*
 tmp/*
