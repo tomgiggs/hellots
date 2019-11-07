@@ -5,7 +5,7 @@ import * as redis from 'redis';
 import * as fs from 'fs';
 import * as multer from'multer';
 import * as crypto from 'crypto'
-
+// let httpSess= request
 let port = 9999;
 let app: any=express();
 app.use(bodyParser.urlencoded({ extended: true })); //这个用来解析接在URL上面的参数

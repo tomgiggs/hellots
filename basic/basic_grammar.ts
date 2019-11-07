@@ -51,7 +51,7 @@ function unknow_arg(name:string,...args){
 
 
 //------------------------------------
-function no_arg(){//定义没有参数的话调用是不能添加参数的，不然会爆粗
+function no_arg(){//定义没有参数的话调用是不能添加参数的，不然会报错
 
     for (const arg of arguments) {
         console.log(arg);

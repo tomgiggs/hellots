@@ -43,6 +43,69 @@ async function demo02(){
     console.log(await demo01('ggggggggggg'));//await只能在异步函数中使用，不能单独使用，async和await是配合使用的，如果要await的函数没有async修饰，那也就不会等待？
 }
 // demo02()
+class FateError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "FateError";
+    }
+}
+
+class FateError2 extends Error {
+    constructor(message) {
+        super(message);
+        // Object.setPrototypeOf(this, Error.prototype);
+        this.name = "FateError2";
+    }
+}
+
+function async_demo(){
+    async.auto({
+        func1:(cb)=>{
+            setTimeout(()=>{
+                console.log("func1 awake...")
+                // cb(null,true)
+                cb(new FateError("break demo"))//这样退出循环
+            },1000)
+        },
+        // func2:(cb,res)=>{
+        //     setTimeout(()=>{
+        //         console.log("func2 awake...")
+        //         cb(null,true);
+        //         return;//return只返回当前函数，并不影响外层函数
+        //     },1000)
+        //
+        // },
+        func3:["func1",(cb,res)=>{
+            console.log("callback error exit...")
+        }]
+
+    },(err,result)=>{
+        console.log( err instanceof FateError);
+        if(err){
+
+            console.log("find error .....");
+            return
+        }
+        console.log(result)
+    });
+}
+
+async_demo();
+
+function loopAsync() {
+    var totalArr = [56, 56, 56, 21, 32];
+    let user = "";
+    async.whilst(function () {
+        return totalArr.length>0;
+    }, (cb) => {
+        totalArr.pop();
+        console.log(totalArr);
+        cb(null,totalArr);
+    }, (err, result) => {
+        console.log(result);
+
+    });
+}
 
 //----------黑暗代码------------------------------
 // let readFile:any = thunkify(fs.readFile);

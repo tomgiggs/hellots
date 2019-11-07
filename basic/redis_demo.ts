@@ -40,7 +40,6 @@ let redisClient:redis.RedisClient= redis.createClient(6379,'192.168.9.130',{
 // })
 
 
-
 // redisClient.watch();
 redisClient.multi([
     // ['time']
