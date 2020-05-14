@@ -6,6 +6,8 @@ import * as fs from 'fs';
 import * as multer from'multer';
 import * as crypto from 'crypto'
 // let httpSess= request
+import * as multiparty from 'multiparty'
+
 let port = 9999;
 let app: any=express();
 app.use(bodyParser.urlencoded({ extended: true })); //这个用来解析接在URL上面的参数
@@ -162,6 +164,31 @@ app.get('/get_resources',bodyParser.json(), function (req, res) { //express.js�
     // });
 });
 
+
+app.get('/upload_img',bodyParser.json(), function (req, res) { //express.js有点不一样的就是很多事情都是要在post这个请求里面加函数
+    try {
+        let url = req.query.url;
+        let md5 = crypto.createHash('md5');
+        let digest = md5.update(req.query.url).digest('hex');
+        var form = new multiparty.Form();   
+        form.uploadDir = './upload';  //上传图片保存的地址 目录必须存在   
+        form.parse(req, function (err, fields, files) {
+            console.log(fields);  // 获取表单的数据       
+            console.log(files);  // 图片上传成功返回的信息       
+            var title = fields.tit[0];       
+            var con = fields.con[0];       
+            var pic = files.pic[0].path;
+ })
+
+
+
+    }catch (e) {
+        console.log(e);
+        res.send({"success":false})
+    }
+
+});
+
 app.get('/page_proxies',bodyParser.json(), function (req, res) { //express.js有点不一样的就是很多事情都是要在post这个请求里面加函数
     try {
         console.log(req.query); //这个是用bodyparser.urlencoded获取的
@@ -194,10 +221,8 @@ app.get('/page_proxies',bodyParser.json(), function (req, res) { //express.js有
     }
 });
 
-app.get('/testdata',function (req,res,next){
-    res.send(JSON.stringify({"name":"python_demo","code":0,"data":[{'name': 'id'}, {'name': 'guid'}, {'name': 'productname'}, {'name': 'ownerid'}, {'name': 'ownername'}, {'name': 'resid'}, {'name': 'online'}, {'name': 'score'}, {'name': 'scorenumber'}, {'name': 'version'}, {'name': 'versioncode'}, {'name': 'screenshot'}, {'name': 'icon'}, {'name': 'releasetime'}, {'name': 'updatetime'}, {'name': 'createtime'}, {'name': 'category'}, {'name': 'flag'}, {'name': 'limit'}, {'name': 'privacy'}, {'name': 'price'}, {'name': 'baseid'}, {'name': 'statement'}, {'name': 'area'}, {'name': 'is_exp_protocol'}, {'name': 'base_version'}, {'name': 'grade'}, {'name': 'search_heat'}, {'name': 'pc'}, {'name': 'web'}, {'name': 'android'}, {'name': 'ios'}, {'name': 'wp'}, {'name': 'pc_edit'}, {'name': 'web_edit'}, {'name': 'android_edit'}, {'name': 'ios_edit'}, {'name': 'wp_edit'}, {'name': 'need_server'}, {'name': 'need_deploy'}, {'name': 'played_num'}]
-    }))
-})
+
+
 app.listen(port, '0.0.0.0',() => console.log('Example app listening on port '+port))
 
 
