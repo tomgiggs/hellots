@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>protobuf demo</title>
+
+</head>
+<body>
+    方式1，直接引用proto文件
+<script src="./protobuf.min.js"></script>
+<script>
+    protobuf.load("../proto/message.proto", function(err, root) {//这种方式不是直接以js代码发布，要怎么将proto转js后直接引用呢
+        if (err)
+            throw err;
+        var AwesomeMessage = root.lookupType("pb.Text");
+        var payload = { text: "AwesomeString" };
+        var errMsg = AwesomeMessage.verify(payload);
+        if (errMsg)
+            throw Error(errMsg);
+        var message = AwesomeMessage.create(payload); // or use .fromObject if conversion is necessary
+        var buffer = AwesomeMessage.encode(message).finish();
+        console.log(buffer)
+        var message = AwesomeMessage.decode(buffer);
+        console.log(message)
+    });
+</script>
+方式2，将proto转js代码后使用，然后将代码用browserify打包成final.web.js引入浏览器运行：
+<script src="./final.web.js"></script>
+
+</body>
+</html>

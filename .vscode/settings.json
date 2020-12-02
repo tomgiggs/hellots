@@ -1,0 +1,12 @@
+{
+    "typescript.useCodeSnippetsOnMethodSuggest": true,
+    "code-runner.runInTerminal": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.js.map":true,
+    }
+}
