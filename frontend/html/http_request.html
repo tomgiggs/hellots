@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function  sendMsg(){
+        // axios.post('http://localhost:8008/goim/push/room?operation=1000&type=live&room=1000', {
+        //     firstName: 'Fred',
+        //     lastName: 'Flintstone'
+        // })
+        //     .then(function (response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+
+        //------------------------------
+        var url = "http://localhost:8008/goim/push/room?operation=1000&type=live&room=1000";
+        var msgBody = document.getElementById("chatMsg")
+        // console.log('msgbody is: ',msgBody.value)
+        var params = {body: msgBody.value}
+        // var params = {advertiserUid: 1232131, advertiserWeiboNickname: "18"};
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.onerror = function (e) {
+            console.error(xhr.responseText,e);
+        };
+        xhr.send(JSON.stringify(params));
+    }
+</script>
+</body>
+</html>

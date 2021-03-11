@@ -1,0 +1,116 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ws client</title>
+</head>
+<body>
+    <script>
+var Client = function (options) {
+    var MAX_CONNECT_TIMES = 10;
+    var DELAY = 15000;
+    this.options = options || {};
+    this.createConnect(MAX_CONNECT_TIMES, DELAY);
+    var Wsclient;
+};
+
+Client.prototype.createConnect = function (max, delay) {
+    var self = this;
+    if (max === 0) {
+        return;
+    }
+    connect();
+    var heartbeatInterval;
+    function connect() {
+        self.Wsclient = new WebSocket('ws://127.0.0.1:16001/rtc');
+        self.Wsclient.binaryType = 'arraybuffer';
+        self.Wsclient.onopen = function () {
+            console.log('websocket connection opened!')
+        };
+
+        self.Wsclient.onmessage = function (evt) {
+            // var dataView = new Uint8Array(evt.data);
+            console.log("recevie msg:",eve.data)
+
+        };
+
+        self.Wsclient.onclose = function () {
+            if (heartbeatInterval) clearInterval(heartbeatInterval);
+            setTimeout(reConnect, delay);
+        };
+    }
+    function reConnect() {
+        self.createConnect(--max, delay * 2);
+    }
+};
+Client.prototype.send= function(msg){
+
+    let byteData = new Uint8Array(msg);
+    // var dataview = new DataView(byteData);
+    this.Wsclient.send(byteData)
+}
+
+var client = new Client()
+setTimeout(() => {
+    client.send({
+    cmd:"enterRoom",
+    room_id:200,
+    user_id:300,
+    msg:"hello this is candidate info"
+})
+}, 1000);
+setTimeout(() => {
+    
+}, 1000000);
+
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 WebSocket测试</title>
+</head>
+<body>
+	<div>
+		<!-- <input type="button" οnclick="test()" value="发送">发送</input> -->
+    </div>
+    <input type = "button" onclick = "test()" value = "发送" ></input>
+	<div id="messages"></div>
+	<script>
+		var webSocket = new WebSocket('ws://127.0.0.1:16001/rtc');
+		webSocket.onerror = function(event) {
+			alert(event.data);
+		};
+		//与WebSocket建立连接
+		webSocket.onopen = function(event) {
+			document.getElementById('messages').innerHTML = '与服务器端建立连接';
+		};
+		//处理服务器返回的信息
+		webSocket.onmessage = function(event) {
+			document.getElementById('messages').innerHTML += '<br />'+ event.data;
+        };
+        webSocket.onclose = function(){
+            console.log("connection closed")
+            setTimeout(reConnect, 5000);
+        }
+        function reConnect() {
+            console.log("reconnecting.....")
+            webSocket = new WebSocket('ws://127.0.0.1:16001/rtc');
+    }
+		function test() {
+            console.log("sending msg.....")
+			//向服务器发送请求
+			webSocket.send(JSON.stringify({
+    cmd:"enterRoom",
+    room_id:200,
+    user_id:300,
+    msg:"hello this is candidate info"
+}));
+		}
+	</script>
+</body>
+</html>
