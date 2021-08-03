@@ -79,7 +79,7 @@
     "vue": "^2.6.10",
     "websocket": "^1.0.29",
     "ws": "^7.1.0",
-    "xmldom": "^0.1.27",
+    "xmldom": "^0.6.0",
     "xpath.js": "^1.1.0"
   },
   "devDependencies": {
