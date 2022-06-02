@@ -64,7 +64,7 @@
     "npm": "^6.9.0",
     "package": "^1.0.1",
     "pinyinlite": "^1.2.1",
-    "protobufjs": "^6.10.1",
+    "protobufjs": "^6.11.3",
     "redis": "^2.8.0",
     "request": "^2.88.0",
     "sequelize": "^4.42.0",
